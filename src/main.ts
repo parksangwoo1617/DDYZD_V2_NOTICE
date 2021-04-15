@@ -1,8 +1,16 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import "reflect-metadata";
+import path from "path";
+import dotenv from "dotenv";
+import { logger } from "./shared/logger";
+import { initApplication } from "./loader";
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
-}
-bootstrap();
+dotenv.config({ path: path.join(__dirname, "../.env") });
+
+initApplication()
+    .catch(() => console.error("server start failed"));
+
+process.on("uncaughtException", (err: Error) => {
+  console.error(err);
+  logger.error("uncaughtException");
+  logger.error(err);
+});
