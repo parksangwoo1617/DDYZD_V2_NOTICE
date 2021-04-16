@@ -7,7 +7,7 @@ const databaseConfigList = {
   development: {
     type: "mysql",
     host: process.env.DEVELOPMENT_HOST,
-    port: +process.env.DEVELOPMENT_PORT,
+    port: +process.env.DEVELOPMENT_PORT!,
     username: process.env.DEVELOPMENT_USERNAME,
     password: process.env.DEVELOPMENT_PASSWORD,
     database: process.env.DEVELOPMENT_DATABASE,
