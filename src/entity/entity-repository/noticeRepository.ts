@@ -9,6 +9,7 @@ export class NoticeRepository extends Repository<Notice> {
         return getCustomRepository(NoticeRepository);
     }
 
+    // club.name 로직 수정
     public async getNotice(size: string, page: string): Promise<Notice[]> {
           return this.createQueryBuilder('notice')
             .select("club.name", "club_name")
@@ -31,19 +32,30 @@ export class NoticeRepository extends Repository<Notice> {
             .getRawMany();
     }
 
-    public async createNotice(): Promise<Notice> {
-        const createNotice = this.createQueryBuilder()
+    public async createNotice(club: Club, title: string, content: string): Promise<void> {
+        await this.createQueryBuilder()
             .insert()
             .into(Notice)
             .values([
-                { club_name: }
+                { club: club, title: title, content: content }
             ])
-        return this.save(createNotice);
+            .execute()
     }
 
-    public async deleteNotice(club: Club, notice: Notice): Promise<void> {
-        await this.delete({ club, notice });
+    public async updateNotice(notice_id: string, title: string, content: string, ): Promise<void> {
+        await this.createQueryBuilder()
+            .update(Notice)
+            .set({ title: title, content: content })
+            .where("id = :id", { id: +notice_id})
+            .execute()
     }
-    
+
+    public async deleteNotice(notice_id: string, notice: Notice): Promise<void> {
+        await this.createQueryBuilder()
+            .delete()
+            .from(Notice)
+            .where("id = :id", { id: +notice_id})
+            .execute()
+    }
 }
 
