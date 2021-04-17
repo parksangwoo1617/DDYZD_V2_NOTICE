@@ -8,7 +8,7 @@ import { ClubHead } from "./ClubHead";
 import { Supply } from "./Supply";
 import { EntityWithIdColumn } from "./EntityWithPrimaryColumn";
 import { Feed } from "./Feed";
-import { Notice } from "./notice";
+import { Notice } from "./Notice";
 
 @Entity("club")
 export class Club extends EntityWithIdColumn {
