@@ -14,7 +14,7 @@ export class Notice extends EntityWithIdColumn{
     @CreateDateColumn()
     createdAt: Date;
 
-    @OneToOne(type => Club, club => club.notice)
+    @ManyToOne(type => Club, club => club.notice)
     @JoinColumn({ name: 'club_id'})
     club: Club;
 }
