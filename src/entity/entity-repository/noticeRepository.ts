@@ -10,7 +10,7 @@ export class NoticeRepository extends Repository<Notice> {
     }
 
     // club.name 로직 수정
-    public async getNotice(size: string, page: string): Promise<Notice[]> {
+    public async getNotice(user_id: string, size: string, page: string): Promise<Notice[]> {
           return this.createQueryBuilder('notice')
             .select("club.name", "club_name")
             .addSelect("notice.title", "notice_title")
