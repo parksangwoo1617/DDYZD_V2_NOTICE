@@ -1,12 +1,9 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne } from "typeorm";
-import { Club } from "./Club";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
+import { ClubMember } from "./ClubMember";
 import { EntityWithIdColumn } from "./EntityWithPrimaryColumn";
 
 @Entity('notice')
 export class Notice extends EntityWithIdColumn{
-    @Column()
-    writer: string;
-    
     @Column()
     title: string;
 
@@ -16,7 +13,6 @@ export class Notice extends EntityWithIdColumn{
     @CreateDateColumn()
     createdAt: Date;
 
-    @ManyToOne(type => Club, club => club.notice)
-    @JoinColumn({ name: 'club_id'})
-    club: Club;
+    @Column()
+    writer: string;
 }
