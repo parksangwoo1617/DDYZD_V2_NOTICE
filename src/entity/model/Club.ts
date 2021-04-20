@@ -63,6 +63,6 @@ export class Club extends EntityWithIdColumn {
   @OneToMany(() => Feed, feed => feed.club) 
   feeds: Feed[];
 
-  @OneToMany(() => Notice, notice => notice.club)
+  @OneToMany(() => Notice, notice => notice.id)
   notice: Notice[];
 }

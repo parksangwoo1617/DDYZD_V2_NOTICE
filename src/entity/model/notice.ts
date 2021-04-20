@@ -1,14 +1,16 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
-import { User } from "./User";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { Club } from "./Club";
 import { EntityWithIdColumn } from "./EntityWithPrimaryColumn";
 
 @Entity('notice')
 export class Notice extends EntityWithIdColumn{
     @Column()
+    writer: string;
+    
+    @Column()
     title: string;
 
-    @Column({ type: "varchar", length: 3000, name: "content"})
+    @Column({ type: "varchar", length: 3000})
     content: string;
 
     @CreateDateColumn()
