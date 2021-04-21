@@ -1,5 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
-import { ClubMember } from "./ClubMember";
+import { Column, CreateDateColumn, Entity } from "typeorm";
 import { EntityWithIdColumn } from "./EntityWithPrimaryColumn";
 
 @Entity('notice')
