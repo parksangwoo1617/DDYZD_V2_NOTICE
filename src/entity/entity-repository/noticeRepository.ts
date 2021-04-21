@@ -1,4 +1,4 @@
-import { Connection, EntityRepository, getCustomRepository, Repository } from "typeorm";
+import { EntityRepository, getCustomRepository, Repository } from "typeorm";
 import { Notice } from "../model/Notice";
 import { Writer } from "../../shared/Enum";
 
