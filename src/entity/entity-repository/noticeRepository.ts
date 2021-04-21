@@ -9,24 +9,24 @@ export class NoticeRepository extends Repository<Notice> {
         return getCustomRepository(NoticeRepository);
     }
 
-    public async getAllNotice(size: string, page: string): Promise<Notice[]> {
+    public async getAllNotice(size: number, page: number): Promise<Notice[]> {
           return this.createQueryBuilder()
             .select("notice.writer", "writer")
             .addSelect("notice.title", "title")
             .addSelect("notice.created_at", "created_at")
             .orderBy("id", "DESC")
-            .limit(+size)
-            .offset(+size * +page)
+            .limit(size)
+            .offset(size * page)
             .getRawMany();
     }
 
-    public async getSpecificNotice(notice_id: string): Promise<Notice> {
+    public async getSpecificNotice(notice_id: number): Promise<Notice> {
         return this.createQueryBuilder()
             .select("notice.writer", "writer")
             .addSelect("notice.title", "title")
             .addSelect("notice.content", "content")
             .addSelect("notice.created_at", "created_at")
-            .where("notice.id = :id", { id: +notice_id })
+            .where("notice.id = :id", { id: notice_id })
             .getRawOne();
     }
 
@@ -40,19 +40,19 @@ export class NoticeRepository extends Repository<Notice> {
             .execute()
     }
 
-    public async updateNotice(notice_id: string, writer: Writer, title: string, content: string): Promise<void> {
+    public async updateNotice(notice_id: number, writer: Writer, title: string, content: string): Promise<void> {
         await this.createQueryBuilder()
             .update(Notice)
             .set({ writer: writer, title: title, content: content })
-            .where("notice.id = :id", { id: +notice_id })
+            .where("notice.id = :id", { id: notice_id })
             .execute()
     }
 
-    public async deleteNotice(notice_id: string): Promise<void> {
+    public async deleteNotice(notice_id: number): Promise<void> {
         await this.createQueryBuilder()
             .delete()
             .from(Notice)
-            .where("notice.id = :id", { id: +notice_id })
+            .where("notice.id = :id", { id: notice_id })
             .execute()
     }
 }
