@@ -1,6 +1,6 @@
 import { Connection, EntityRepository, getCustomRepository, Repository } from "typeorm";
 import { Notice } from "../model/Notice";
-import { Club } from "../model/Club";
+import { Writer } from "../../shared/Enum";
 
 @EntityRepository(Notice)
 export class NoticeRepository extends Repository<Notice> {
@@ -9,52 +9,50 @@ export class NoticeRepository extends Repository<Notice> {
         return getCustomRepository(NoticeRepository);
     }
 
-    // club.name 로직 수정
-    public async getNotice(user_id: string, size: string, page: string): Promise<Notice[]> {
-          return this.createQueryBuilder('notice')
-            .select("club.name", "club_name")
-            .addSelect("notice.title", "notice_title")
-            .addSelect("notice.content", "notice_content")
-            .addSelect("notice.createdAt", "notice_date")
-            .leftJoin("notice.club", "club")
+    public async getAllNotice(size: string, page: string): Promise<Notice[]> {
+          return this.createQueryBuilder()
+            .select("notice.writer", "writer")
+            .addSelect("notice.title", "title")
+            .addSelect("notice.created_at", "created_at")
+            .orderBy("id", "DESC")
             .limit(+size)
             .offset(+size * +page)
-            .getMany();
-    }
-
-    public async getSpecificNotice(club_id: string): Promise<Notice[]> {
-        return this.createQueryBuilder('notice')
-            .select("club.name")
-            .addSelect("notice.title")
-            .addSelect("notice.content")
-            .leftJoin("notice.club", "club")
-            .where("notice.club = :id", { id: +club_id })
             .getRawMany();
     }
 
-    public async createNotice(club: Club, title: string, content: string): Promise<void> {
+    public async getSpecificNotice(notice_id: string): Promise<Notice> {
+        return this.createQueryBuilder()
+            .select("notice.writer", "writer")
+            .addSelect("notice.title", "title")
+            .addSelect("notice.content", "content")
+            .addSelect("notice.created_at", "created_at")
+            .where("notice.id = :id", { id: +notice_id })
+            .getRawOne();
+    }
+
+    public async createNotice(writer: Writer, title: string, content: string): Promise<void> {
         await this.createQueryBuilder()
             .insert()
             .into(Notice)
             .values([
-                { club: club, title: title, content: content }
+                { writer: writer, title: title, content: content }
             ])
             .execute()
     }
 
-    public async updateNotice(notice_id: string, title: string, content: string, ): Promise<void> {
+    public async updateNotice(notice_id: string, writer: Writer, title: string, content: string): Promise<void> {
         await this.createQueryBuilder()
             .update(Notice)
-            .set({ title: title, content: content })
-            .where("id = :id", { id: +notice_id})
+            .set({ writer: writer, title: title, content: content })
+            .where("notice.id = :id", { id: +notice_id })
             .execute()
     }
 
-    public async deleteNotice(notice_id: string, notice: Notice): Promise<void> {
+    public async deleteNotice(notice_id: string): Promise<void> {
         await this.createQueryBuilder()
             .delete()
             .from(Notice)
-            .where("id = :id", { id: +notice_id})
+            .where("notice.id = :id", { id: +notice_id })
             .execute()
     }
 }
