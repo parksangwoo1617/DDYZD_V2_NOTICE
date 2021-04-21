@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity } from "typeorm";
 import { EntityWithIdColumn } from "./EntityWithPrimaryColumn";
-import { Writer } from "../../shared/Enum";
+import { Writer } from "../../shared/checkAdmin";
 
 @Entity('notice')
 export class Notice extends EntityWithIdColumn{
