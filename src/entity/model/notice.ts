@@ -1,6 +1,11 @@
 import { Column, CreateDateColumn, Entity } from "typeorm";
 import { EntityWithIdColumn } from "./EntityWithPrimaryColumn";
 
+export enum Writer {
+    T,
+    L
+}
+
 @Entity('notice')
 export class Notice extends EntityWithIdColumn{
     @Column()
@@ -12,6 +17,6 @@ export class Notice extends EntityWithIdColumn{
     @CreateDateColumn()
     createdAt: Date;
 
-    @Column()
+    @Column({ type: "enum", enum: Writer})
     writer: string;
 }
