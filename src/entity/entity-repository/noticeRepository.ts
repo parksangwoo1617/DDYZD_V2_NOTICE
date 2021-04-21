@@ -1,6 +1,6 @@
 import { EntityRepository, getCustomRepository, Repository } from "typeorm";
 import { Notice } from "../model/Notice";
-import { Writer } from "../../shared/Enum";
+import { Writer } from "../../shared/checkAdmin";
 
 @EntityRepository(Notice)
 export class NoticeRepository extends Repository<Notice> {
